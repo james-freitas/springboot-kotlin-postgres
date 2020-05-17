@@ -1,6 +1,5 @@
 package com.codeonblue.sample
 
-import bootstrap.DataLoader
 import com.codeonblue.sample.domain.Category
 import com.codeonblue.sample.repository.CategoryRepository
 import org.slf4j.Logger
@@ -8,7 +7,6 @@ import org.slf4j.LoggerFactory
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
-import java.util.*
 
 @SpringBootApplication
 class SampleApplication(val categoryRepository: CategoryRepository) : CommandLineRunner {
