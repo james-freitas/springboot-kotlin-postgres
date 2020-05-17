@@ -1,0 +1,31 @@
+# ===============================
+# = DATA SOURCE
+# ===============================
+# Set here configurations for the database connection
+
+spring:
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    open-in-view: false
+    properties:
+      hibernate:
+        # Allows Hibernate to generate SQL optimized for a particular DBMS
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+      # Naming strategy
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyHbmImpl
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/sample
+    username: postgres
+    password: postgres
+    driverClassName: org.postgresql.Driver
+    # Keep the connection alive if idle for a long time (needed in production)
+    testWhileIdle: true
+    validationQuery: SELECT 1
+
+
