@@ -27,5 +27,7 @@ spring:
     # Keep the connection alive if idle for a long time (needed in production)
     testWhileIdle: true
     validationQuery: SELECT 1
+  flyway:
+    enabled: false
 
 
