@@ -36,7 +36,7 @@ jobs:
             - gradle-dependencies-
 
       #- run: gradle dependencies
-      - run: ./gradlew --no-daemon downloadDependencies --stacktrace
+      #- run: ./gradlew --no-daemon downloadDependencies --stacktrace
 
 #      - save_cache:
 #          paths:
