@@ -4,6 +4,7 @@
 # Set here configurations for the database connection
 
 spring:
+
   jpa:
     database: POSTGRESQL
     show-sql: true
@@ -12,12 +13,14 @@ spring:
       hibernate:
         # Allows Hibernate to generate SQL optimized for a particular DBMS
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
       # Naming strategy
       naming:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyHbmImpl
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+
   datasource:
     platform: postgres
     url: jdbc:postgresql://localhost:5432/sample
@@ -27,7 +30,8 @@ spring:
     # Keep the connection alive if idle for a long time (needed in production)
     testWhileIdle: true
     validationQuery: SELECT 1
+
   flyway:
-    enabled: false
+    enabled: true
 
 

@@ -17,7 +17,7 @@ class Category(
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
         generator="category_id_seq")
     @Column(updatable = false)
-    var id: Long? = null,
+    var id: Int? = null,
 
     var description: String
 )
