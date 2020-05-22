@@ -28,8 +28,6 @@ repositories {
 	mavenCentral()
 }
 
-val junitJupiterVersion = "5.5.2"
-
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -38,10 +36,8 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	runtimeOnly("org.postgresql:postgresql")
 	implementation("org.flywaydb:flyway-core")
+	testImplementation("io.zonky.test:embedded-database-spring-test:1.5.3")
 
-	testImplementation("org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion")
-	testImplementation("org.junit.jupiter:junit-jupiter-params:$junitJupiterVersion")
-	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion")
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
 	}
@@ -72,6 +68,9 @@ val integrationTestImplementation: Configuration by configurations.getting {
 
 configurations["integrationTestRuntimeOnly"].extendsFrom(configurations.runtimeOnly.get())
 
-//dependencies {
-//	integrationTestImplementation("io.zonky.test:embedded-database-spring-test:1.5.3")
-//}
+dependencies {
+	val junitJupiterVersion = "5.5.2"
+	integrationTestImplementation("org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion")
+	integrationTestImplementation("org.junit.jupiter:junit-jupiter-params:$junitJupiterVersion")
+	integrationTestImplementation("org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion")
+}
