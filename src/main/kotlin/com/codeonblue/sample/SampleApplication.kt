@@ -1,7 +1,7 @@
 package com.codeonblue.sample
 
 import com.codeonblue.sample.domain.Category
-import com.codeonblue.sample.CategoryRepository
+import com.codeonblue.sample.repository.CategoryRepository
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.boot.CommandLineRunner

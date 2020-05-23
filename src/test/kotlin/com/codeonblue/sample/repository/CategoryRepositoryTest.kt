@@ -1,5 +1,6 @@
-package com.codeonblue.sample
+package com.codeonblue.sample.repository
 
+import com.codeonblue.sample.SampleApplication
 import com.codeonblue.sample.domain.Category
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase
 import org.assertj.core.api.Assertions.assertThat
@@ -9,7 +10,6 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ContextConfiguration
-import org.springframework.test.context.junit4.SpringRunner
 
 @SpringBootTest(classes = [SampleApplication::class])
 @FlywayTest

@@ -1,4 +1,4 @@
-package com.codeonblue.sample
+package com.codeonblue.sample.repository
 
 import com.codeonblue.sample.domain.Category
 import org.springframework.data.jpa.repository.JpaRepository
