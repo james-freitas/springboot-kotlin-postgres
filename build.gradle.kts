@@ -62,6 +62,8 @@ sourceSets {
 	}
 }
 
+configurations["integrationTestRuntimeOnly"].extendsFrom(configurations.runtimeOnly.get())
+
 val integrationTestImplementation: Configuration by configurations.getting {
 	extendsFrom(configurations.implementation.get())
 }
@@ -69,8 +71,9 @@ val integrationTestImplementation: Configuration by configurations.getting {
 configurations["integrationTestRuntimeOnly"].extendsFrom(configurations.runtimeOnly.get())
 
 dependencies {
-	val junitJupiterVersion = "5.5.2"
-	integrationTestImplementation("org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion")
-	integrationTestImplementation("org.junit.jupiter:junit-jupiter-params:$junitJupiterVersion")
-	integrationTestImplementation("org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion")
+	integrationTestImplementation("io.zonky.test:embedded-database-spring-test:1.5.3")
+	integrationTestImplementation("org.springframework.boot:spring-boot-starter-test") {
+		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
+	}
+
 }
