@@ -16,6 +16,7 @@ spring:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyHbmImpl
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
 
+  # Database configuration
   datasource:
     platform: postgres
     url: jdbc:postgresql://localhost:5432/sample
@@ -26,9 +27,11 @@ spring:
     testWhileIdle: true
     validationQuery: SELECT 1
 
+  # Enable flyway
   flyway:
     enabled: true
 
+  # Enable health check
   management:
     endpoint:
       health:
