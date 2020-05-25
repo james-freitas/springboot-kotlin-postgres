@@ -19,3 +19,10 @@ These additional references should also help you:
 
 * [Gradle Build Scans – insights for your project's build](https://scans.gradle.com#gradle)
 
+### Features
+
+#### Health Check
+ 1. Run the application: `./gradlew bootRun`
+ 2. Execute on terminal: `curl http://localhost:8080/actuator/health`
+ 
+ 
