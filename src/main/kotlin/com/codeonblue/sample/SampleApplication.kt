@@ -16,7 +16,7 @@ class SampleApplication(val categoryRepository: CategoryRepository) : CommandLin
 	override fun run(vararg args: String?) {
 		if (categoryRepository.count() == 0L) {
 			logger.info(">>>> Number of records in DB before insert: ${categoryRepository.count()}")
-			loadData();
+			loadData()
 		}
 		logger.info(">>>>> Final number of records in the DB: ${categoryRepository.count()}")
 	}
