@@ -1,4 +1,6 @@
-# Getting Started
+[![CircleCI](https://circleci.com/gh/james-freitas/springboot-kotlin-postgres.svg?style=svg)](https://circleci.com/gh/james-freitas/springboot-kotlin-postgres)
+
+## Spring boot Kotlin application
 
 ### Reference Documentation
 For further reference, please consider the following sections:
