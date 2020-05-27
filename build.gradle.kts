@@ -56,16 +56,7 @@ tasks.withType<KotlinCompile> {
 	}
 }
 
-tasks.test {
-	finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
-}
-tasks.jacocoTestReport {
-	dependsOn(tasks.test) // tests are required to run before generating the report
-}
 
-tasks.check {
-	dependsOn("jacocoTestReport", "jacocoTestCoverageVerification")
-}
 
 /****** Integration tests configuration ********/
 sourceSets {
@@ -126,4 +117,16 @@ tasks.jacocoTestCoverageVerification {
 		}
 	}
 	mustRunAfter(tasks["jacocoTestReport"])
+}
+
+tasks.test {
+	finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
+}
+tasks.jacocoTestReport {
+	dependsOn(tasks.test) // tests are required to run before generating the report
+}
+
+/********** Check dependencies ***********/
+tasks.check {
+	dependsOn("jacocoTestReport", "jacocoTestCoverageVerification")
 }
