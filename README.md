@@ -27,4 +27,6 @@ These additional references should also help you:
  1. Run the application: `./gradlew bootRun`
  2. Execute on terminal: `curl http://localhost:8080/actuator/health`
  
- 
+#### Jacoco
+ 1. Build the project: `./gradlew build`
+ 2. Run jacoco report: `./gradlew jacocoTestReport`    

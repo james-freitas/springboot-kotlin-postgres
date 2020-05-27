@@ -6,6 +6,7 @@ plugins {
 	kotlin("jvm") version "1.3.72"
 	kotlin("plugin.spring") version "1.3.72"
 	kotlin("plugin.allopen") version "1.3.61"
+	jacoco
 }
 
 allOpen {
@@ -55,6 +56,17 @@ tasks.withType<KotlinCompile> {
 	}
 }
 
+tasks.test {
+	finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
+}
+tasks.jacocoTestReport {
+	dependsOn(tasks.test) // tests are required to run before generating the report
+}
+
+tasks.check {
+	dependsOn("jacocoTestReport", "jacocoTestCoverageVerification")
+}
+
 /****** Integration tests configuration ********/
 sourceSets {
 	create("integrationTest") {
@@ -76,5 +88,42 @@ dependencies {
 	integrationTestImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
 	}
+}
 
+tasks.register<Test>("integrationTest") {
+	description = "Runs integration tests"
+	group = "verification"
+	testClassesDirs = sourceSets["integrationTest"].output.classesDirs
+	classpath = sourceSets["integrationTest"].runtimeClasspath
+}
+
+/********** Jacoco configuration ***********/
+tasks.test {
+	finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
+}
+tasks.jacocoTestReport {
+	dependsOn(tasks.test) // tests are required to run before generating the report
+}
+
+jacoco {
+	toolVersion = "0.8.5"
+	reportsDir = file("$buildDir/jacocoTestDir")
+}
+
+tasks.jacocoTestReport {
+	reports {
+		xml.isEnabled = true
+		csv.isEnabled = true
+	}
+}
+
+tasks.jacocoTestCoverageVerification {
+	violationRules {
+		rule {
+			limit {
+				minimum = "0.5".toBigDecimal()
+			}
+		}
+	}
+	mustRunAfter(tasks["jacocoTestReport"])
 }
