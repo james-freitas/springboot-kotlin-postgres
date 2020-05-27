@@ -29,4 +29,7 @@ These additional references should also help you:
  
 #### Jacoco
  1. Build the project: `./gradlew build`
- 2. Run jacoco report: `./gradlew jacocoTestReport`    
+ 2. Run jacoco report: `./gradlew jacocoTestReport`
+ 
+#### Detekt
+ - Run jacoco report: `./gradlew detekt`         
