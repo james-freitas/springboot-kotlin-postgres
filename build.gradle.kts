@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	id("org.springframework.boot") version "2.2.7.RELEASE"
 	id("io.spring.dependency-management") version "1.0.9.RELEASE"
+	id("io.gitlab.arturbosch.detekt") version "1.9.1"
 	kotlin("jvm") version "1.3.72"
 	kotlin("plugin.spring") version "1.3.72"
 	kotlin("plugin.allopen") version "1.3.61"
@@ -27,6 +28,7 @@ configurations {
 
 repositories {
 	mavenCentral()
+	jcenter()
 }
 
 dependencies {
@@ -126,7 +128,20 @@ tasks.jacocoTestReport {
 	dependsOn(tasks.test) // tests are required to run before generating the report
 }
 
+/********** Detekt dependencies ***********/
+detekt {
+	input = files("src")
+	config = files("detekt-config.yml")
+	reports {
+		html {
+			enabled = true
+			destination = file("build/reports/detekt.html")
+		}
+	}
+}
+
+
 /********** Check dependencies ***********/
 tasks.check {
-	dependsOn("jacocoTestReport", "jacocoTestCoverageVerification")
+	dependsOn("jacocoTestReport", "jacocoTestCoverageVerification", "detekt")
 }

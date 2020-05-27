@@ -30,6 +30,7 @@ class SampleApplication(val categoryRepository: CategoryRepository) : CommandLin
 	}
 }
 
+@SuppressWarnings("SpreadOperator")
 fun main(args: Array<String>) {
 	runApplication<SampleApplication>(*args)
 }
