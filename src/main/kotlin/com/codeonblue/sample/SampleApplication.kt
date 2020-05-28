@@ -11,26 +11,26 @@ import org.springframework.boot.runApplication
 @SpringBootApplication
 class SampleApplication(val categoryRepository: CategoryRepository) : CommandLineRunner {
 
-	private val logger: Logger = LoggerFactory.getLogger(SampleApplication::class.java)
+    private val logger: Logger = LoggerFactory.getLogger(SampleApplication::class.java)
 
-	override fun run(vararg args: String?) {
-		if (categoryRepository.count() == 0L) {
-			logger.info(">>>> Number of records in DB before insert: ${categoryRepository.count()}")
-			loadData()
-		}
-		logger.info(">>>>> Final number of records in the DB: ${categoryRepository.count()}")
-	}
+    override fun run(vararg args: String?) {
+        if (categoryRepository.count() == 0L) {
+            logger.info(">>>> Number of records in DB before insert: ${categoryRepository.count()}")
+            loadData()
+        }
+        logger.info(">>>>> Final number of records in the DB: ${categoryRepository.count()}")
+    }
 
-	private fun loadData() {
+    private fun loadData() {
 
-		val category = Category(
-			description = "Eletronics"
-		)
-		categoryRepository.save(category)
-	}
+        val category = Category(
+            description = "Eletronics"
+        )
+        categoryRepository.save(category)
+    }
 }
 
 @SuppressWarnings("SpreadOperator")
 fun main(args: Array<String>) {
-	runApplication<SampleApplication>(*args)
+    runApplication<SampleApplication>(*args)
 }

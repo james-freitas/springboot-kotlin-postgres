@@ -32,4 +32,11 @@ These additional references should also help you:
  2. Run jacoco report: `./gradlew jacocoTestReport`
  
 #### Detekt
- - Run jacoco report: `./gradlew detekt`         
+ - Run jacoco report: `./gradlew detekt`
+ 
+#### Ktlint
+ 1. Build the project: `./gradlew build`
+ 2. Run ktlint check: `./gradlew ktlintCheck`
+ 
+ - If you find indentation issues with tabs run: `./gradlew ktlintFormat`
+         
