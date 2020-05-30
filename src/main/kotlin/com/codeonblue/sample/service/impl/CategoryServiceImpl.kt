@@ -4,12 +4,11 @@ import com.codeonblue.sample.dto.CategoryDto
 import com.codeonblue.sample.repository.CategoryRepository
 import com.codeonblue.sample.service.CategoryService
 import org.springframework.stereotype.Service
-import java.lang.RuntimeException
 
 @Service
 class CategoryServiceImpl(
     private val categoryRepository: CategoryRepository
-): CategoryService {
+) : CategoryService {
 
     override fun getCategoryById(id: Int): CategoryDto {
         val category = categoryRepository.findById(id)

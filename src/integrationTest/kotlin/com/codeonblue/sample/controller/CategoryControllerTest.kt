@@ -4,8 +4,6 @@ import com.codeonblue.sample.dto.CategoryDto
 import com.codeonblue.sample.service.CategoryService
 import org.junit.jupiter.api.Test
 import org.mockito.BDDMockito.given
-import org.mockito.Mockito.times
-import org.mockito.Mockito.verify
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
@@ -13,7 +11,6 @@ import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
-
 
 @WebMvcTest(CategoryController::class)
 @AutoConfigureMockMvc
@@ -36,16 +33,12 @@ internal class CategoryControllerTest {
         given(categoryService.getCategoryById(1))
             .willReturn(categoryDto)
 
-
         mockMvc.get("/api/v1/categories/1") {
             accept = MediaType.APPLICATION_JSON
         }.andExpect {
             status { isOk }
             content { contentType(MediaType.APPLICATION_JSON) }
-            //jsonPath("$.description") { value("Category test")}
+            jsonPath("$.description") { value("Category test") }
         }
-
-        //verify(categoryService.getCategoryById(1))
-        // verify(categoryService, times(1)).getCategoryById(1)
     }
 }

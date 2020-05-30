@@ -1,6 +1,6 @@
 package com.codeonblue.sample.dto
 
 data class CategoryDto(
-    val id: Int,
+    val id: Int? = null,
     val description: String
 )

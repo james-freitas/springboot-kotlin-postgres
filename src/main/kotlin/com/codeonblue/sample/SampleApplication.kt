@@ -4,7 +4,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class SampleApplication()
+class SampleApplication
 
 @SuppressWarnings("SpreadOperator")
 fun main(args: Array<String>) {

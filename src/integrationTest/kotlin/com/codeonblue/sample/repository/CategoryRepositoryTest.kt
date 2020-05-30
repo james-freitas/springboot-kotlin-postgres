@@ -28,7 +28,8 @@ class CategoryRepositoryTest {
     @Test
     fun `should insert a category successfully`() {
 
-        val category = Category(description = "Category 1")
+        val category = Category(
+            description = "Category 1")
 
         categoryRepository.save(category)
 

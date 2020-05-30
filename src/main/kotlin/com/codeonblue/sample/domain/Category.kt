@@ -21,7 +21,7 @@ class Category(
         generator = "category_id_seq"
     )
     @Column(updatable = false)
-    var id: Int,
+    var id: Int? = null,
     var description: String
 ) {
     fun toDto(): CategoryDto =

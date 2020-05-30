@@ -9,6 +9,7 @@ plugins {
     kotlin("plugin.allopen") version "1.3.61"
     id("io.gitlab.arturbosch.detekt") version "1.9.1"
     id("org.jlleitschuh.gradle.ktlint") version "9.2.1"
+    id("org.jlleitschuh.gradle.ktlint-idea") version "9.2.1"
     jacoco
 }
 

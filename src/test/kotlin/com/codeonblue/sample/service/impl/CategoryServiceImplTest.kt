@@ -7,13 +7,11 @@ import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.verify
+import java.util.Optional
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
-import java.lang.RuntimeException
-import java.util.Optional
-
 
 @ExtendWith(MockKExtension::class)
 internal class CategoryServiceImplTest {
@@ -23,7 +21,6 @@ internal class CategoryServiceImplTest {
 
     @InjectMockKs
     private lateinit var categoryService: CategoryServiceImpl
-
 
     @Test
     fun `Should find existent category by Id successfully`() {
@@ -48,6 +45,7 @@ internal class CategoryServiceImplTest {
         every { categoryRepository.findById(any()) } returns Optional.empty()
 
         assertThrows<RuntimeException> { categoryService.getCategoryById(1) }
+
         verify(exactly = 1) { categoryRepository.findById(1) }
     }
 }

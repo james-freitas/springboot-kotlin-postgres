@@ -38,5 +38,5 @@ These additional references should also help you:
  1. Build the project: `./gradlew build`
  2. Run ktlint check: `./gradlew ktlintCheck`
  
- - If you find indentation issues with tabs run: `./gradlew ktlintFormat`
+ - If you find ktlint issues with tabs run: `./gradlew ktlintFormat`
          
