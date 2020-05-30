@@ -1,5 +1,6 @@
 package com.codeonblue.sample.domain
 
+import com.codeonblue.sample.dto.CategoryDto
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -20,6 +21,12 @@ class Category(
         generator = "category_id_seq"
     )
     @Column(updatable = false)
-    var id: Int? = null,
+    var id: Int,
     var description: String
-)
+) {
+    fun toDto(): CategoryDto =
+        CategoryDto(
+            id = id,
+            description = description
+        )
+}

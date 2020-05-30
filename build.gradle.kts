@@ -3,11 +3,12 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("org.springframework.boot") version "2.2.7.RELEASE"
     id("io.spring.dependency-management") version "1.0.9.RELEASE"
+    kotlin("jvm") version "1.3.61"
+    kotlin("plugin.spring") version "1.3.61"
+    kotlin("plugin.jpa") version "1.3.61"
+    kotlin("plugin.allopen") version "1.3.61"
     id("io.gitlab.arturbosch.detekt") version "1.9.1"
     id("org.jlleitschuh.gradle.ktlint") version "9.2.1"
-    kotlin("jvm") version "1.3.72"
-    kotlin("plugin.spring") version "1.3.72"
-    kotlin("plugin.allopen") version "1.3.61"
     jacoco
 }
 
@@ -42,7 +43,7 @@ dependencies {
     runtimeOnly("org.postgresql:postgresql")
     implementation("org.flywaydb:flyway-core")
     testImplementation("io.zonky.test:embedded-database-spring-test:1.5.3")
-
+    testImplementation("io.mockk:mockk:1.9.3")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
