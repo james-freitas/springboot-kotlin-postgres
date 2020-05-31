@@ -11,7 +11,6 @@ import springfox.documentation.swagger.web.SwaggerResource
 import springfox.documentation.swagger.web.SwaggerResourcesProvider
 import springfox.documentation.swagger2.annotations.EnableSwagger2
 
-
 @Primary
 @Configuration
 @EnableSwagger2

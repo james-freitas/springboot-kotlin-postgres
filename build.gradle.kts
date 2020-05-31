@@ -66,9 +66,13 @@ tasks.withType<KotlinCompile> {
 /****** Integration tests configuration ********/
 sourceSets {
     create("integrationTest") {
-        compileClasspath += sourceSets.main.get().output
-        runtimeClasspath += sourceSets.main.get().output
+        java.srcDir(file("src/integrationTest/kotlin"))
+        resources.srcDir(file("src/integrationTest/resources"))
+        compileClasspath += sourceSets["main"].output + configurations["testRuntimeClasspath"]
+        runtimeClasspath += output + compileClasspath
     }
+    getByName("test").java.srcDirs("src/integrationTest/kotlin")
+    getByName("test").resources.srcDirs("src/integrationTest/resources")
 }
 
 configurations["integrationTestRuntimeOnly"].extendsFrom(configurations.runtimeOnly.get())
@@ -130,7 +134,7 @@ tasks.jacocoTestCoverageVerification {
     violationRules {
         rule {
             limit {
-                minimum = "0.4".toBigDecimal()
+                minimum = "0.6".toBigDecimal()
             }
         }
     }
