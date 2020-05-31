@@ -1,6 +1,7 @@
 package com.codeonblue.sample.service.impl
 
 import com.codeonblue.sample.domain.Category
+import com.codeonblue.sample.exception.ResourceNotFoundException
 import com.codeonblue.sample.repository.CategoryRepository
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
@@ -44,7 +45,7 @@ internal class CategoryServiceImplTest {
 
         every { categoryRepository.findById(any()) } returns Optional.empty()
 
-        assertThrows<RuntimeException> { categoryService.getCategoryById(1) }
+        assertThrows<ResourceNotFoundException> { categoryService.getCategoryById(1) }
 
         verify(exactly = 1) { categoryRepository.findById(1) }
     }

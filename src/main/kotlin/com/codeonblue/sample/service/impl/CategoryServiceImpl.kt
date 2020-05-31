@@ -1,6 +1,7 @@
 package com.codeonblue.sample.service.impl
 
 import com.codeonblue.sample.dto.CategoryDto
+import com.codeonblue.sample.exception.ResourceNotFoundException
 import com.codeonblue.sample.repository.CategoryRepository
 import com.codeonblue.sample.service.CategoryService
 import org.springframework.stereotype.Service
@@ -14,7 +15,7 @@ class CategoryServiceImpl(
         val category = categoryRepository.findById(id)
 
         val categoryFound = category.orElseThrow {
-            RuntimeException("Category not found.")
+            ResourceNotFoundException("Category not found.")
         }
 
         return categoryFound.toDto()
