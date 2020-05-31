@@ -103,7 +103,8 @@ val ignoredPaths: Iterable<String> = listOf(
     "com/codeonblue/sample/SampleApplication*",
     "com/codeonblue/sample/config/SwaggerConfig*",
     "com/codeonblue/sample/domain/*",
-    "com/codeonblue/sample/dto/*"
+    "com/codeonblue/sample/dto/*",
+    "com/codeonblue/sample/exception/*"
 )
 
 tasks.test {
@@ -135,7 +136,7 @@ tasks.jacocoTestCoverageVerification {
     violationRules {
         rule {
             limit {
-                minimum = "0.6".toBigDecimal()
+                minimum = "0.1".toBigDecimal()
             }
         }
     }
