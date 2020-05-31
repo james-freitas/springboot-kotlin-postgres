@@ -43,6 +43,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     runtimeOnly("org.postgresql:postgresql")
     implementation("org.flywaydb:flyway-core")
+    implementation("io.springfox:springfox-swagger2:2.9.2")
+    implementation("io.springfox:springfox-swagger-ui:2.9.2")
     testImplementation("io.zonky.test:embedded-database-spring-test:1.5.3")
     testImplementation("io.mockk:mockk:1.9.3")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
@@ -92,6 +94,13 @@ tasks.register<Test>("integrationTest") {
 }
 
 /********** Jacoco configuration ***********/
+
+val ignoredPaths: Iterable<String> = listOf(
+    "com/codeonblue/sample/SampleApplication*",
+    "com/codeonblue/sample/config/SwaggerConfig*",
+    "com/codeonblue/sample/domain/*"
+)
+
 tasks.test {
     finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
 }
@@ -108,14 +117,20 @@ tasks.jacocoTestReport {
     reports {
         xml.isEnabled = true
         csv.isEnabled = true
+        html.destination = file("$buildDir/jacoco/html")
     }
+    classDirectories.setFrom(
+        sourceSets.main.get().output.asFileTree.matching {
+            exclude(ignoredPaths)
+        }
+    )
 }
 
 tasks.jacocoTestCoverageVerification {
     violationRules {
         rule {
             limit {
-                minimum = "0.5".toBigDecimal()
+                minimum = "0.4".toBigDecimal()
             }
         }
     }

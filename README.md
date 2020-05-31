@@ -39,4 +39,7 @@ These additional references should also help you:
  2. Run ktlint check: `./gradlew ktlintCheck`
  
  - If you find ktlint issues with tabs run: `./gradlew ktlintFormat`
-         
+
+#### Swagger
+ 1. Run the application: `./gradlew bootRun`
+ 2. Open in any browser: `http://localhost:8080/swagger-ui.html`
