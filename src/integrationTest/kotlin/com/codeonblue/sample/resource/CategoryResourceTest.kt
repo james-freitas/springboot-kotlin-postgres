@@ -54,7 +54,6 @@ class CategoryResourceTest {
         }
     }
 
-
     @Test
     fun `Should get 404 status when trying to find an non existent category`() {
 
@@ -68,5 +67,4 @@ class CategoryResourceTest {
     companion object {
         private const val CATEGORIES_PATH = "/api/v1/categories"
     }
-
 }
