@@ -102,7 +102,8 @@ tasks.register<Test>("integrationTest") {
 val ignoredPaths: Iterable<String> = listOf(
     "com/codeonblue/sample/SampleApplication*",
     "com/codeonblue/sample/config/SwaggerConfig*",
-    "com/codeonblue/sample/domain/*"
+    "com/codeonblue/sample/domain/*",
+    "com/codeonblue/sample/dto/*"
 )
 
 tasks.test {
