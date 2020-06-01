@@ -33,7 +33,7 @@ internal class CategoryServiceImplTest {
 
         every { categoryRepository.findById(1) } returns Optional.of(category)
 
-        val categoryFound = categoryService.getCategoryById(1)
+        val categoryFound = categoryService.findById(1)
 
         assertThat(categoryFound.id).isEqualTo(category.id)
         assertThat(categoryFound.description).isEqualTo(category.description)
@@ -45,8 +45,45 @@ internal class CategoryServiceImplTest {
 
         every { categoryRepository.findById(any()) } returns Optional.empty()
 
-        assertThrows<ResourceNotFoundException> { categoryService.getCategoryById(1) }
+        assertThrows<ResourceNotFoundException> { categoryService.findById(1) }
 
         verify(exactly = 1) { categoryRepository.findById(1) }
+    }
+
+    @Test
+    fun `Should return a non empty category list`() {
+
+        val categoryList = listOf(
+            Category(
+                id = 1,
+                description = "Category 1"
+            ),
+            Category(
+                id = 2,
+                description = "Category 2"
+            )
+        )
+
+        every { categoryRepository.findAll() } returns categoryList
+
+        val categoryListFound = categoryService.findAll()
+
+        assertThat(categoryListFound.size).isEqualTo(2)
+        assertThat(categoryListFound[0].description).isEqualTo(categoryList[0].description)
+        assertThat(categoryListFound[1].description).isEqualTo(categoryList[1].description)
+
+        verify(exactly = 1) { categoryRepository.findAll() }
+    }
+
+    @Test
+    fun `Should return an empty category list`() {
+
+        every { categoryRepository.findAll() } returns emptyList()
+
+        val categoryListFound = categoryService.findAll()
+
+        assertThat(categoryListFound.size).isEqualTo(0)
+
+        verify(exactly = 1) { categoryRepository.findAll() }
     }
 }

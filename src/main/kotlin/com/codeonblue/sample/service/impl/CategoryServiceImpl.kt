@@ -11,7 +11,7 @@ class CategoryServiceImpl(
     private val categoryRepository: CategoryRepository
 ) : CategoryService {
 
-    override fun getCategoryById(id: Int): CategoryDto {
+    override fun findById(id: Int): CategoryDto {
         val category = categoryRepository.findById(id)
 
         val categoryFound = category.orElseThrow {
@@ -19,5 +19,12 @@ class CategoryServiceImpl(
         }
 
         return categoryFound.toDto()
+    }
+
+    override fun findAll(): List<CategoryDto> {
+
+        val categories = categoryRepository.findAll()
+
+        return categories.map { category -> CategoryDto(category.id, category.description) }
     }
 }

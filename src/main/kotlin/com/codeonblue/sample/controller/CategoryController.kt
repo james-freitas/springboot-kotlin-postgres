@@ -18,7 +18,14 @@ class CategoryController(
     @GetMapping("/{id}")
     fun getCategory(@PathVariable id: Int): ResponseEntity<CategoryDto?>? {
         return ResponseEntity<CategoryDto?>(
-            categoryService.getCategoryById(id), HttpStatus.OK
+            categoryService.findById(id), HttpStatus.OK
+        )
+    }
+
+    @GetMapping
+    fun getCategories(): ResponseEntity<List<CategoryDto>> {
+        return ResponseEntity<List<CategoryDto>>(
+            categoryService.findAll(), HttpStatus.OK
         )
     }
 }

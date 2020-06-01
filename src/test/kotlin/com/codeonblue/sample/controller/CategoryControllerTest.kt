@@ -30,15 +30,48 @@ internal class CategoryControllerTest {
                         description = "Category test"
                     )
 
-        given(categoryService.getCategoryById(1))
+        given(categoryService.findById(1))
             .willReturn(categoryDto)
 
-        mockMvc.get("/api/v1/categories/1") {
+        mockMvc.get("$CATEGORIES_PATH/1") {
             accept = MediaType.APPLICATION_JSON
         }.andExpect {
             status { isOk }
             content { contentType(MediaType.APPLICATION_JSON) }
             jsonPath("$.description") { value("Category test") }
         }
+    }
+
+    @Test
+    fun `Should get a category list successfully`() {
+
+        val categoryList = listOf(
+            CategoryDto(
+                id = 1,
+                description = "Category 1"
+            ),
+            CategoryDto(
+                id = 2,
+                description = "Category 2"
+            )
+        )
+
+        given(categoryService.findAll())
+            .willReturn(categoryList)
+
+        mockMvc.get(CATEGORIES_PATH) {
+            accept = MediaType.APPLICATION_JSON
+        }.andExpect {
+            status { isOk }
+            content { contentType(MediaType.APPLICATION_JSON) }
+
+            jsonPath("$") { isNotEmpty }
+            jsonPath("$[0].description") { value(categoryList[0].description) }
+            jsonPath("$[1].description") { value(categoryList[1].description) }
+        }
+    }
+
+    companion object {
+        private const val CATEGORIES_PATH = "/api/v1/categories"
     }
 }

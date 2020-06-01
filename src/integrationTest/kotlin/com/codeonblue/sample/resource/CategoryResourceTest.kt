@@ -39,13 +39,12 @@ class CategoryResourceTest {
     fun `Should get 200 status when trying to find an existent category`() {
 
         val category = Category(
-            id = 1,
             description = "Category test"
         )
 
-        categoryRepository.save(category)
+        val categorySaved = categoryRepository.save(category)
 
-        mockMvc.get("$CATEGORIES_PATH/1") {
+        mockMvc.get("$CATEGORIES_PATH/${categorySaved.id}") {
             accept = MediaType.APPLICATION_JSON
         }.andExpect {
             status { isOk }
@@ -61,6 +60,32 @@ class CategoryResourceTest {
             accept = MediaType.APPLICATION_JSON
         }.andExpect {
             status { isNotFound }
+        }
+    }
+
+    @Test
+    fun `Should get 200 status when retrieve a category list`() {
+
+        val categoryList = listOf(
+            Category(
+                description = "Category 1"
+            ),
+            Category(
+                description = "Category 2"
+            )
+        )
+
+        categoryRepository.saveAll(categoryList)
+
+        mockMvc.get(CATEGORIES_PATH) {
+            accept = MediaType.APPLICATION_JSON
+        }.andExpect {
+            status { isOk }
+            content { contentType(MediaType.APPLICATION_JSON) }
+            jsonPath("$") { isArray }
+            jsonPath("$") { isNotEmpty }
+            jsonPath("$[0].description") { value(categoryList[0].description) }
+            jsonPath("$[1].description") { value(categoryList[1].description) }
         }
     }
 
