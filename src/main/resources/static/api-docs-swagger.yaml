@@ -5,12 +5,12 @@ info:
   description: Sample API without goal yeat
   version: 1.0.0
 paths:
-  /api/v1/categories:
+  /api/v1/categories/{id}:
     get:
       tags:
         - Categories
       summary: Finds category by id
-      description: One id is informe to get a category
+      description: One id is informed to get a category
       operationId: getCategoryById
       parameters:
         - name: id
@@ -47,6 +47,23 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DefaultResponse"
+  /api/v1/categories:
+    get:
+      tags:
+        - Categories
+      summary: Get all categories
+      description: Gets all categories
+      operationId: getAllCategories
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {
+                  $ref: "#/components/schemas/CategoryDto"
+                }
 components:
   schemas:
     DefaultResponse:
