@@ -66,13 +66,9 @@ tasks.withType<KotlinCompile> {
 /****** Integration tests configuration ********/
 sourceSets {
     create("integrationTest") {
-        java.srcDir(file("src/integrationTest/kotlin"))
-        resources.srcDir(file("src/integrationTest/resources"))
-        compileClasspath += sourceSets["main"].output + configurations["testRuntimeClasspath"]
-        runtimeClasspath += output + compileClasspath
+        compileClasspath += sourceSets.main.get().output
+        runtimeClasspath += sourceSets.main.get().output
     }
-    getByName("test").java.srcDirs("src/integrationTest/kotlin")
-    getByName("test").resources.srcDirs("src/integrationTest/resources")
 }
 
 configurations["integrationTestRuntimeOnly"].extendsFrom(configurations.runtimeOnly.get())
