@@ -1,12 +1,14 @@
 package com.codeonblue.sample.service.impl
 
 import com.codeonblue.sample.domain.Category
+import com.codeonblue.sample.dto.CategoryDto
 import com.codeonblue.sample.exception.ResourceNotFoundException
 import com.codeonblue.sample.repository.CategoryRepository
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
-import io.mockk.impl.annotations.MockK
+import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.junit5.MockKExtension
+import io.mockk.slot
 import io.mockk.verify
 import java.util.Optional
 import org.assertj.core.api.Assertions.assertThat
@@ -17,7 +19,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 @ExtendWith(MockKExtension::class)
 internal class CategoryServiceImplTest {
 
-    @MockK
+    @RelaxedMockK
     private lateinit var categoryRepository: CategoryRepository
 
     @InjectMockKs
@@ -85,5 +87,22 @@ internal class CategoryServiceImplTest {
         assertThat(categoryListFound.size).isEqualTo(0)
 
         verify(exactly = 1) { categoryRepository.findAll() }
+    }
+
+    @Test
+    fun `Should create a category successfully`() {
+
+        val categoryDto = CategoryDto(description = "Test description")
+        val categoryEntity = Category(id = 1, description = "Test description")
+
+        val category = slot<Category>()
+
+        every { categoryRepository.save(capture(category)) } returns categoryEntity
+
+        val categoryCreated = categoryService.create(categoryDto)
+
+        assertThat(categoryCreated.id).isEqualTo(1)
+        assertThat(categoryCreated.description).isEqualTo("Test description")
+        verify(exactly = 1) { categoryRepository.save(capture(category)) }
     }
 }

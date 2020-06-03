@@ -7,4 +7,6 @@ interface CategoryService {
     fun findById(id: Int): CategoryDto?
 
     fun findAll(): List<CategoryDto>
+
+    fun create(category: CategoryDto): CategoryDto
 }

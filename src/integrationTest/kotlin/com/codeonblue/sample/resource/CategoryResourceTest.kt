@@ -2,8 +2,11 @@ package com.codeonblue.sample.resource
 
 import com.codeonblue.sample.SampleApplication
 import com.codeonblue.sample.domain.Category
+import com.codeonblue.sample.dto.CategoryDto
 import com.codeonblue.sample.repository.CategoryRepository
+import com.fasterxml.jackson.databind.ObjectMapper
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase
+import org.assertj.core.api.Assertions.assertThat
 import org.flywaydb.test.annotation.FlywayTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -15,6 +18,7 @@ import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
+import org.springframework.test.web.servlet.post
 
 @SpringBootTest(classes = [SampleApplication::class])
 @AutoConfigureMockMvc
@@ -29,6 +33,9 @@ class CategoryResourceTest {
 
     @Autowired
     private lateinit var categoryRepository: CategoryRepository
+
+    @Autowired
+    private lateinit var objectMapper: ObjectMapper
 
     @BeforeEach
     private fun before() {
@@ -87,6 +94,25 @@ class CategoryResourceTest {
             jsonPath("$[0].description") { value(categoryList[0].description) }
             jsonPath("$[1].description") { value(categoryList[1].description) }
         }
+    }
+
+    @Test
+    fun `Should get 201 status when creating a new category`() {
+
+        val category = CategoryDto(
+            description = "New category"
+        )
+
+        val categoryToJson = objectMapper.writeValueAsString(category)
+
+        mockMvc.post(CATEGORIES_PATH) {
+            contentType = MediaType.APPLICATION_JSON
+            content = categoryToJson
+        }.andExpect {
+            status { isCreated }
+        }
+
+        assertThat(categoryRepository.count()).isEqualTo(1)
     }
 
     companion object {

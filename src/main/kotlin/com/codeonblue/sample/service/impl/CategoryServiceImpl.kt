@@ -1,5 +1,6 @@
 package com.codeonblue.sample.service.impl
 
+import com.codeonblue.sample.domain.Category
 import com.codeonblue.sample.dto.CategoryDto
 import com.codeonblue.sample.exception.ResourceNotFoundException
 import com.codeonblue.sample.repository.CategoryRepository
@@ -26,5 +27,10 @@ class CategoryServiceImpl(
         val categories = categoryRepository.findAll()
 
         return categories.map { category -> CategoryDto(category.id, category.description) }
+    }
+
+    override fun create(category: CategoryDto): CategoryDto {
+        val categoryEntity = Category(description = category.description)
+        return categoryRepository.save(categoryEntity).toDto()
     }
 }

@@ -64,6 +64,15 @@ paths:
                 items: {
                   $ref: "#/components/schemas/CategoryDto"
                 }
+    post:
+      tags:
+        - Categories
+      summary: Create a category
+      description: Create a category
+      operationId: createCategory
+      responses:
+        201:
+          description: Category created successfully
 components:
   schemas:
     DefaultResponse:

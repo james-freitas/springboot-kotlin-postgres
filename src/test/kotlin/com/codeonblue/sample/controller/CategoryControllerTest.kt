@@ -2,6 +2,7 @@ package com.codeonblue.sample.controller
 
 import com.codeonblue.sample.dto.CategoryDto
 import com.codeonblue.sample.service.CategoryService
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.Test
 import org.mockito.BDDMockito.given
 import org.springframework.beans.factory.annotation.Autowired
@@ -11,6 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
+import org.springframework.test.web.servlet.post
 
 @WebMvcTest(CategoryController::class)
 @AutoConfigureMockMvc
@@ -21,6 +23,9 @@ internal class CategoryControllerTest {
 
     @MockBean
     private lateinit var categoryService: CategoryService
+
+    @Autowired
+    private lateinit var objectMapper: ObjectMapper
 
     @Test
     fun `Should get a category for a given id`() {
@@ -68,6 +73,29 @@ internal class CategoryControllerTest {
             jsonPath("$") { isNotEmpty }
             jsonPath("$[0].description") { value(categoryList[0].description) }
             jsonPath("$[1].description") { value(categoryList[1].description) }
+        }
+    }
+
+    @Test
+    fun `Should create a category successfully`() {
+
+        val category = CategoryDto(
+            description = "New category"
+        )
+
+        given(categoryService.create(category))
+            .willReturn(CategoryDto(
+                id = 1,
+                description = "New category"
+            ))
+
+        val categoryToJson = objectMapper.writeValueAsString(category)
+
+        mockMvc.post(CATEGORIES_PATH) {
+            contentType = MediaType.APPLICATION_JSON
+            content = categoryToJson
+        }.andExpect {
+            status { isCreated }
         }
     }
 
