@@ -17,6 +17,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.delete
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 
@@ -113,6 +114,36 @@ class CategoryResourceTest {
         }
 
         assertThat(categoryRepository.count()).isEqualTo(1)
+    }
+
+    @Test
+    fun `Should get 204 status when trying to delete an existent category`() {
+
+        val category = Category(
+            description = "Category test"
+        )
+
+        val categorySaved = categoryRepository.save(category)
+
+        assertThat(categoryRepository.count()).isEqualTo(1)
+
+        mockMvc.delete("$CATEGORIES_PATH/${categorySaved.id}") {
+            accept = MediaType.APPLICATION_JSON
+        }.andExpect {
+            status { isNoContent }
+        }
+
+        assertThat(categoryRepository.count()).isEqualTo(0)
+    }
+
+    @Test
+    fun `Should get 404 status when trying to delete a not existent category`() {
+
+        mockMvc.delete("$CATEGORIES_PATH/99") {
+            accept = MediaType.APPLICATION_JSON
+        }.andExpect {
+            status { isNotFound }
+        }
     }
 
     companion object {

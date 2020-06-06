@@ -33,4 +33,14 @@ class CategoryServiceImpl(
         val categoryEntity = Category(description = category.description)
         return categoryRepository.save(categoryEntity).toDto()
     }
+
+    override fun deleteById(id: Int) {
+        val category = categoryRepository.findById(id)
+
+        val categoryFound = category.orElseThrow {
+            ResourceNotFoundException("Category not found.")
+        }
+
+        categoryRepository.delete(categoryFound)
+    }
 }

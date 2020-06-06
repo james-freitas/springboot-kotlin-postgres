@@ -47,6 +47,40 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DefaultResponse"
+    delete:
+      tags:
+        - Categories
+      summary: Deletes category by id
+      description: One id is informed to delete a category
+      operationId: deleteCategoryById
+      parameters:
+        - name: id
+          in: path
+          description: Id that need to be informed
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          description: Successful operation
+        400:
+          description: Invalid id supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DefaultResponse"
+        404:
+          description: Category not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DefaultResponse"
+        405:
+          description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DefaultResponse"
   /api/v1/categories:
     get:
       tags:

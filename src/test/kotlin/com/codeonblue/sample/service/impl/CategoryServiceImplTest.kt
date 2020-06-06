@@ -4,10 +4,12 @@ import com.codeonblue.sample.domain.Category
 import com.codeonblue.sample.dto.CategoryDto
 import com.codeonblue.sample.exception.ResourceNotFoundException
 import com.codeonblue.sample.repository.CategoryRepository
+import io.mockk.Runs
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.junit5.MockKExtension
+import io.mockk.just
 import io.mockk.slot
 import io.mockk.verify
 import java.util.Optional
@@ -104,5 +106,34 @@ internal class CategoryServiceImplTest {
         assertThat(categoryCreated.id).isEqualTo(1)
         assertThat(categoryCreated.description).isEqualTo("Test description")
         verify(exactly = 1) { categoryRepository.save(capture(category)) }
+    }
+
+    @Test
+    fun `Should delete existent category by Id successfully`() {
+
+        val categoryId = 1
+
+        val category = Category(
+            id = 1,
+            description = "Test description"
+        )
+
+        every { categoryRepository.findById(categoryId) } returns Optional.of(category)
+        every { categoryRepository.deleteById(categoryId) } just Runs
+
+        categoryService.deleteById(categoryId)
+
+        verify(exactly = 1) { categoryRepository.findById(categoryId) }
+        verify(exactly = 1) { categoryRepository.delete(category) }
+    }
+
+    @Test
+    fun `Should throw exception when trying to delete not existent category`() {
+
+        every { categoryRepository.findById(any()) } returns Optional.empty()
+
+        assertThrows<ResourceNotFoundException> { categoryService.deleteById(1) }
+
+        verify(exactly = 1) { categoryRepository.findById(1) }
     }
 }

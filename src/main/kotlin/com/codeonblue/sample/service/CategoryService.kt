@@ -9,4 +9,6 @@ interface CategoryService {
     fun findAll(): List<CategoryDto>
 
     fun create(category: CategoryDto): CategoryDto
+
+    fun deleteById(idtoDelete: Int)
 }
