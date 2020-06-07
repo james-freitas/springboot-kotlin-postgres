@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.delete
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
+import org.springframework.test.web.servlet.put
 
 @SpringBootTest(classes = [SampleApplication::class])
 @AutoConfigureMockMvc
@@ -144,6 +145,34 @@ class CategoryResourceTest {
         }.andExpect {
             status { isNotFound }
         }
+    }
+
+    @Test
+    fun `Should get 200 status when trying to update a category`() {
+
+        val category = Category(
+            description = "Category test"
+        )
+        val categorySaved = categoryRepository.save(category)
+
+        assertThat(categoryRepository.count()).isEqualTo(1)
+
+        val categoryDto = CategoryDto(
+            id = categorySaved.id,
+            description = "Category updated"
+        )
+        val categoryToJson = objectMapper.writeValueAsString(categoryDto)
+
+        mockMvc.put("$CATEGORIES_PATH/${categorySaved.id}") {
+            contentType = MediaType.APPLICATION_JSON
+            content = categoryToJson
+        }.andExpect {
+            status { isOk }
+        }
+
+        assertThat(categoryRepository.count()).isEqualTo(1)
+        val categoryUpdated = categoryRepository.findById(categorySaved.id!!)
+        assertThat(categoryUpdated.get().description).isEqualTo("Category updated")
     }
 
     companion object {

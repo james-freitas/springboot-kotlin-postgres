@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -46,9 +47,24 @@ class CategoryController(
 
     @DeleteMapping("/{id}")
     fun deleteCategory(@PathVariable id: Int): ResponseEntity<Void> {
+
         categoryService.deleteById(id)
+
         return ResponseEntity<Void>(
             HttpStatus.NO_CONTENT
         )
+    }
+
+    @PutMapping("/{id}")
+    fun updateCategory(
+        @RequestBody categoryDto: CategoryDto,
+        @PathVariable id: Int
+    ): ResponseEntity<CategoryDto> {
+
+        categoryDto.id = id
+
+        val categoryUpdated = categoryService.update(categoryDto)
+
+        return ResponseEntity(categoryUpdated, HttpStatus.OK)
     }
 }

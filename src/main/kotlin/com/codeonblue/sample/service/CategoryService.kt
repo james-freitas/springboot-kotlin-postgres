@@ -8,7 +8,9 @@ interface CategoryService {
 
     fun findAll(): List<CategoryDto>
 
-    fun create(category: CategoryDto): CategoryDto
+    fun create(categoryDto: CategoryDto): CategoryDto
 
-    fun deleteById(idtoDelete: Int)
+    fun deleteById(id: Int)
+
+    fun update(categoryDto: CategoryDto): CategoryDto
 }

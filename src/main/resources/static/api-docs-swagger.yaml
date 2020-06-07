@@ -81,6 +81,48 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DefaultResponse"
+    put:
+      tags:
+        - Categories
+      summary: Updates category by id
+      description: One id is informed to update a category
+      operationId: updateCategoryById
+      parameters:
+        - name: id
+          in: path
+          description: Id that need to be informed
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Category body request
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryDto'
+      responses:
+        200:
+          description: Successful operation
+        400:
+          description: Invalid id supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DefaultResponse"
+        404:
+          description: Category not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DefaultResponse"
+        405:
+          description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DefaultResponse"
+
   /api/v1/categories:
     get:
       tags:
@@ -94,16 +136,20 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items: {
-                  $ref: "#/components/schemas/CategoryDto"
-                }
+                $ref: '#/components/schemas/CategoryDto'
     post:
       tags:
         - Categories
       summary: Create a category
       description: Create a category
       operationId: createCategory
+      requestBody:
+        description: Category body request
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryDto'
       responses:
         201:
           description: Category created successfully

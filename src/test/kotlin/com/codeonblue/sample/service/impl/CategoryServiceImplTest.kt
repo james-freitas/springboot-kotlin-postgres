@@ -136,4 +136,35 @@ internal class CategoryServiceImplTest {
 
         verify(exactly = 1) { categoryRepository.findById(1) }
     }
+
+    @Test
+    fun `Should update a category successfully`() {
+
+        val categoryDto = CategoryDto(id = 1, description = "Update description")
+        val categoryEntity = Category(id = 1, description = "Update description")
+
+        val category = slot<Category>()
+
+        every { categoryRepository.findById(categoryDto.id!!) } returns Optional.of(categoryEntity)
+        every { categoryRepository.save(capture(category)) } returns categoryEntity
+
+        val categoryUpdated = categoryService.update(categoryDto)
+
+        assertThat(categoryUpdated.id).isEqualTo(1)
+        assertThat(categoryUpdated.description).isEqualTo("Update description")
+
+        verify(exactly = 1) { categoryRepository.save(capture(category)) }
+    }
+
+    @Test
+    fun `Should throw exception when trying to update not existent category`() {
+
+        val categoryDto = CategoryDto(id = 1, description = "Update description")
+
+        every { categoryRepository.findById(any()) } returns Optional.empty()
+
+        assertThrows<ResourceNotFoundException> { categoryService.update(categoryDto) }
+
+        verify(exactly = 1) { categoryRepository.findById(categoryDto.id!!) }
+    }
 }

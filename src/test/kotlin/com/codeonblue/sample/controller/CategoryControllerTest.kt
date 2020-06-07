@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.delete
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
+import org.springframework.test.web.servlet.put
 
 @WebMvcTest(CategoryController::class)
 @AutoConfigureMockMvc
@@ -112,6 +113,29 @@ internal class CategoryControllerTest {
             contentType = MediaType.APPLICATION_JSON
         }.andExpect {
             status { isNoContent }
+        }
+    }
+
+    @Test
+    fun `Should update a category successfully`() {
+
+        val category = CategoryDto(
+            description = "Category changed"
+        )
+
+        given(categoryService.update(category))
+            .willReturn(CategoryDto(
+                id = 1,
+                description = "Category changed"
+            ))
+
+        val categoryToJson = objectMapper.writeValueAsString(category)
+
+        mockMvc.put("$CATEGORIES_PATH/1") {
+            contentType = MediaType.APPLICATION_JSON
+            content = categoryToJson
+        }.andExpect {
+            status { isOk }
         }
     }
 
