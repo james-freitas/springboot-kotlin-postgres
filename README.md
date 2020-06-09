@@ -21,6 +21,15 @@ These additional references should also help you:
 
 * [Gradle Build Scans – insights for your project's build](https://scans.gradle.com#gradle)
 
+
+### Environment variables
+
+- Set these before run the application
+```bash
+  export SPRING_DATASOURCE_URL=<db_url>
+  export SPRING_DATASOURCE_USERNAME=<db_username>
+  export SPRING_DATASOURCE_PASSWORD=<db_password>
+```
 ### Features
 
 #### Health Check
