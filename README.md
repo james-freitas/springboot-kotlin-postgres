@@ -54,18 +54,25 @@ These additional references should also help you:
  2. Open in any browser: `http://localhost:8080/swagger-ui.html`
  
 
-### How to run the project
+### How to set up and run the project
 
-1. Create a postgres database
+1. Update the project name in the following files:
+  - `settings.gradle.kts`
+  - `build.gradle.kts` (jacoco exclusion configs)
+  - `SampleApplication` (change to your application name)
+  - `api-docs-swagger.yaml` (change to your application name)
+  
 
-2. Set the environment variables
+2. Create a postgres database and grant privileges on it to a database user
+
+3. Set the environment variables
 ```bash
   export SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/<database_name>
   export SPRING_DATASOURCE_USERNAME=<database_username>
   export SPRING_DATASOURCE_PASSWORD=<database_password>
 ```
 
-3. Run the app with `./gradlew bootRun` 
+4. Run the app with `./gradlew bootRun` 
 
 
-4. Test it is working on terminal: `curl http://localhost:8080/actuator/health` (should get a 200)
+5. Test it is working on terminal: `curl http://localhost:8080/actuator/health` (should get a 200)
