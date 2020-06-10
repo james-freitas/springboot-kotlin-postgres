@@ -52,3 +52,18 @@ These additional references should also help you:
 #### Swagger
  1. Run the application: `./gradlew bootRun`
  2. Open in any browser: `http://localhost:8080/swagger-ui.html`
+ 
+
+### How to run the project
+
+1. Set the environment variables
+```bash
+  export SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/sample
+  export SPRING_DATASOURCE_USERNAME=postgres
+  export SPRING_DATASOURCE_PASSWORD=postgres
+```
+
+2. Run the app with `./gradlew bootRun` 
+
+
+3. Test it is working on terminal: `curl http://localhost:8080/actuator/health` (should get a 200)

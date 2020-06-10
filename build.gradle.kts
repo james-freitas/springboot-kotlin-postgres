@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.run.BootRun
 
 plugins {
     id("org.springframework.boot") version "2.2.7.RELEASE"
@@ -161,4 +162,11 @@ detekt {
 /********** Check dependencies ***********/
 tasks.check {
     dependsOn("jacocoTestReport", "jacocoTestCoverageVerification", "ktlintCheck", "detekt")
+}
+
+/********** Environment variables ***********/
+tasks.withType<BootRun> {
+    environment("SPRING_DATASOURCE_URL", "jdbc:postgresql://localhost:5432/sample")
+    environment("SPRING_DATASOURCE_USERNAME", "postgres")
+    environment("SPRING_DATASOURCE_PASSWORD", "postgres")
 }
