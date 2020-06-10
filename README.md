@@ -56,14 +56,16 @@ These additional references should also help you:
 
 ### How to run the project
 
-1. Set the environment variables
+1. Create a postgres database
+
+2. Set the environment variables
 ```bash
-  export SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/sample
-  export SPRING_DATASOURCE_USERNAME=postgres
-  export SPRING_DATASOURCE_PASSWORD=postgres
+  export SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/<database_name>
+  export SPRING_DATASOURCE_USERNAME=<database_username>
+  export SPRING_DATASOURCE_PASSWORD=<database_password>
 ```
 
-2. Run the app with `./gradlew bootRun` 
+3. Run the app with `./gradlew bootRun` 
 
 
-3. Test it is working on terminal: `curl http://localhost:8080/actuator/health` (should get a 200)
+4. Test it is working on terminal: `curl http://localhost:8080/actuator/health` (should get a 200)
