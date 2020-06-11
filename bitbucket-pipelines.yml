@@ -1,0 +1,27 @@
+image: openjdk:8
+
+pipelines:
+  default:
+    - step:
+        caches:
+          - gradle
+        script:
+          - bash ./gradlew build
+    - step:
+        name: Create artifact
+        script:
+          - tar czfv application.tgz detekt-config.yml build.gradle.kts gradlew settings.gradle.kts gradle/wrapper/gradle-wrapper.jar gradle/wrapper/gradle-wrapper.properties src/
+        artifacts:
+          - application.tgz
+    - step:
+        name: Deploy to production
+        deployment: production
+        script:
+          - pipe: atlassian/heroku-deploy:1.1.0
+            variables:
+              HEROKU_API_KEY: $HEROKU_API_KEY
+              HEROKU_APP_NAME: $HEROKU_APP_NAME
+              SPRING_DATASOURCE_URL: $SPRING_DATASOURCE_URL
+              SPRING_DATASOURCE_USERNAME: $SPRING_DATASOURCE_USERNAME
+              SPRING_DATASOURCE_PASSWORD: $SPRING_DATASOURCE_PASSWORD
+              ZIP_FILE: "application.tgz"
